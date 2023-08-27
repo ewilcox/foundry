@@ -77,6 +77,8 @@ async function main() {
                 if (toggleActorIconResult == enabled) token.toggleEffect(huntersMarkIconPath);
             })();
 
+            // TODO need permission updates for this
+            // TODO need to verify the token has an active hunters mark to remove or add a token ID when adding the mark, then use it to remove the mark regardless?
             //mark or unmark selected targets token with Hunter's Mark effect icon
             (async () => { 
                 toggleTargetIconResult = await selectedTokan.toggleEffect(huntersMarkIconPath);
