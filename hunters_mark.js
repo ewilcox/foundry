@@ -23,7 +23,7 @@ async function main() {
         let toggleTargetIconResult = false;
     
         if (targets.length == 0 || targets.length > 1) {
-            ui.notifications.error(`Please target exactly 1 tolken.`);
+            ui.notifications.error(`Please target exactly 1 token.`);
         } else if (targets[0].actor.id == actor.id) {
             ui.notifications.error(`Are you really trying to cast Hunter's Mark on yourself ${actor.name}???`);
         } else {
@@ -79,6 +79,8 @@ async function main() {
 
             // TODO need permission updates for this
             // TODO need to verify the token has an active hunters mark to remove or add a token ID when adding the mark, then use it to remove the mark regardless?
+            // TODO can we take advantage of https://github.com/VanceCole/player-token-permissions ?
+
             //mark or unmark selected targets token with Hunter's Mark effect icon
             (async () => { 
                 toggleTargetIconResult = await selectedTokan.toggleEffect(huntersMarkIconPath);
