@@ -1,5 +1,8 @@
 // Test file for testing methods in Foundry VTT
 
+// REMEMBER: to enable hooks to see debug output of actions being called
+// use `CONFIG.debug.hooks = true` in the console
+
 main()
 
 async function main() {
@@ -9,24 +12,21 @@ async function main() {
     if(canvas.tokens.controlled == 0 || canvas.tokens.controlled > 1) {
         errorReason = errorSelectCaster;
     }
-    if(game.user.targets == 0 || game.user.targets > 1) {
-        errorReason = errorSelectSingleTarget;
-    }
-    
-    // console.log("Tokens: ", canvas.tokens)
-    let token = canvas.tokens.controlled[0];
-    let targets = Array.from(game.user.targets);
 
-    if(targets.length == 0 || targets.length > 1) {
-        errorReason = "Must target 1 and only 1";
+    const goblinAlchemyFireItemName = 'Goblin Fire Oil';
+    let actor = canvas.tokens.controlled[0].actor;
+    let fireOil = actor.items.filter(item => item.name === `${goblinAlchemyFireItemName}`)[0];
+
+    await fireOil.update({'system.quantity': fireOil.system.quantity - 1});
+    if (fireOil.system.quantity < 1) {
+        fireOil.delete();
     }
 
-    console.log("Token: ", token);
-    console.log("Target: ", targets);
+
     
     if (errorReason) {
-        message.log("test");
         ui.notifications.error(`${errorReason}`);
+        console.log(errorReason);
         return;
     }
 
